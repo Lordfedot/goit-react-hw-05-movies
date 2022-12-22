@@ -1,43 +1,47 @@
+import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Searchbar } from './Searchbar';
-import { fetchMovies } from 'servises/Api';
 
-export const Movies = () => {
+import { fetchMovies } from 'servises/Api';
+ const Movies = () => {
+   const [searchParams] = useSearchParams();
+  const params = searchParams.get('filter') ?? ''
   const [movies, setMovies] = useState([]);
-  const [input, setInput] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     const fetch = async () => {
-      if (input === '') {
+      if (params === '') {
+        setMovies([])
         return;
       }
-      const response = await fetchMovies(input);
+      const response = await fetchMovies(params);
       const serchMovies = response.results;
       setMovies(serchMovies);
     };
     fetch();
-  }, [input]);
+  }, [params]);
 
-  const handleSubmit = value => {
-    setInput(value);
-  };
-
-  if (movies === []) {
+  if (movies === null) {
     return;
   }
 
   return (
     <>
-      <Searchbar onSubmit={handleSubmit} />
+      <Searchbar/>
       <ul>
         {movies.map(({ id, title }) => (
           <li key={id}>
-            <Link to={`${id}`}>{title}</Link>
+            <Link to={`${id}`} state={{ from: location }}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
-      <Outlet/>
+      <Outlet />
     </>
   );
 };
+
+export default Movies

@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-
-
-export const Searchbar = ({onSubmit}) => {
-    const [input,setInput] = useState('')
-    const handleNameChange = (e) => {
-        setInput(e.currentTarget.value.toLowerCase())
+export const Searchbar = () => {
+  const [input, setInput] = useState('')
+  const [, setSearchParams] = useSearchParams();
+  const handleNameChange = e => {
+    const value = e.currentTarget.value.toLowerCase();
+    setInput(value)
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (input === '') {
+      setSearchParams({})
+      return;
     }
-    const handleSubmit =(e) => {
-        e.preventDefault()
-
-        if (input === '') {
-            return
-        }
-        onSubmit(input)
-        setInput('')
-    }
+    const value = e.target.input.value
+    setSearchParams(value !== '' ? { filter: value } : {})
+  };
   return (
     <form onSubmit={handleSubmit} className="form">
       <button type="submit" className="button">
@@ -23,6 +24,7 @@ export const Searchbar = ({onSubmit}) => {
       </button>
 
       <input
+        name="input"
         value={input}
         onChange={handleNameChange}
         className="input"

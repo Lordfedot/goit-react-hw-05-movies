@@ -9,19 +9,31 @@ export const Reviews = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await fetchReviews(movieId);
-    lo
-      setCast(response.cast);
+      setReviews(response.results);
     };
     fetch();
-  });
+  }, [movieId]);
+  console.log(reviews);
 
-  if (cast === null) {
+  if (reviews === null) {
     return;
   }
+  if (reviews.length === 0) {
+    return <h1>There is no reviews</h1>;
+  }
 
-  return (
-    <Box>
-      
-    </Box>
-  );
+  if (reviews.length > 0) {
+    return (
+      <Box>
+        <ul>
+          {reviews.map(({ id, author, content }) => (
+            <li key={id}>
+              <h2>Author: {author}</h2>
+              <p>{content}</p>
+            </li>
+          ))}
+        </ul>
+      </Box>
+    );
+  }
 };

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { fetchTrendingMovies } from 'servises/Api';
 
-export const Home = () => {
+const Home = () => {
   const [films, setFilms] = useState([]);
   useEffect(() => {
     const fetch = async () => {
@@ -23,3 +23,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home
