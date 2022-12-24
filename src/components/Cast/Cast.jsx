@@ -19,24 +19,30 @@ export const Cast = () => {
     return;
   }
 
-  return (
-    <Box>
-      <ul>
-        {cast.map(({ character, name, profile_path, id }) => (
-          <li key={id}>
-            <img
-              src={
-                profile_path
-                  ? `https://image.tmdb.org/t/p/w500${profile_path}`
-                  : defaultImage
-              }
-              alt={name}
-            />
-            <p>Name: {name}</p>
-            <p>Charecter: {character}</p>
-          </li>
-        ))}
-      </ul>
-    </Box>
-  );
+  if (cast.length === 0) {
+    return <h1>There is no cast here</h1>;
+  }
+
+  if (cast.length > 0) {
+    return (
+      <Box>
+        <ul>
+          {cast.map(({ character, name, profile_path, id }) => (
+            <li key={id}>
+              <img
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/w500${profile_path}`
+                    : defaultImage
+                }
+                alt={name}
+              />
+              <p>Name: {name}</p>
+              <p>Charecter: {character}</p>
+            </li>
+          ))}
+        </ul>
+      </Box>
+    );
+  }
 };

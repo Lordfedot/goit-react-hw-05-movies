@@ -26,7 +26,8 @@ const MovieDetails = () => {
     movie;
   const genreNames = genres.map(genre => genre.name);
   const score = 10 * vote_average.toFixed(1);
-  const backLinkHref = location.state?.from ?? '/movies';
+  const backLinkHref = location?.state?.from ?? '/movies';
+  
   return (
     <Box>
       <Box display="flex">
@@ -54,13 +55,13 @@ const MovieDetails = () => {
         <h2>Additional Information</h2>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link state={{from: location.state.from}} to="cast">Cast</Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link state={{from: location.state.from}} to="reviews">Reviews</Link>
           </li>
         </ul>
-        <Outlet />
+        <Outlet/>
       </Box>
     </Box>
   );

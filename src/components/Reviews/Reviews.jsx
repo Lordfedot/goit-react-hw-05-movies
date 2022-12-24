@@ -13,7 +13,6 @@ export const Reviews = () => {
     };
     fetch();
   }, [movieId]);
-  console.log(reviews);
 
   if (reviews === null) {
     return;
